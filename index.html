@@ -1,0 +1,54 @@
+// habits.js — habit tracker logic (depends on storage.js being loaded first)
+let habits = load('pb_habits', []);
+const habitList = document.getElementById('habitList');
+const habitInput = document.getElementById('habitInput');
+
+function renderHabits() {
+  habitList.innerHTML = '';
+  if (habits.length === 0) {
+    habitList.innerHTML = '<div class="empty">No habits yet — add one above.</div>';
+  }
+  const today = todayKey();
+  let best = 0;
+  habits.forEach((h, i) => {
+    best = Math.max(best, h.streak || 0);
+    const doneToday = h.lastDate === today;
+    const li = document.createElement('li');
+    li.className = 'habit-item';
+    li.innerHTML = `<button class="habit-check ${doneToday ? 'on' : ''}" data-i="${i}"></button>
+      <span>${h.name}</span><span class="streak">${h.streak || 0} day streak</span>`;
+    habitList.appendChild(li);
+  });
+  document.getElementById('statStreak').textContent = best;
+}
+
+function addHabit() {
+  const name = habitInput.value.trim();
+  if (!name) return;
+  habits.push({ name, streak: 0, lastDate: null });
+  habitInput.value = '';
+  save('pb_habits', habits);
+  renderHabits();
+}
+
+habitInput.addEventListener('keydown', e => { if (e.key === 'Enter') addHabit(); });
+document.getElementById('addHabitBtn').addEventListener('click', addHabit);
+
+habitList.addEventListener('click', e => {
+  const i = e.target.dataset.i;
+  if (i === undefined) return;
+  const h = habits[i];
+  const today = todayKey();
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (h.lastDate === today) {
+    h.lastDate = null;
+    h.streak = Math.max(0, (h.streak || 0) - 1);
+  } else {
+    h.streak = (h.lastDate === yesterday) ? (h.streak || 0) + 1 : 1;
+    h.lastDate = today;
+  }
+  save('pb_habits', habits);
+  renderHabits();
+});
+
+renderHabits();
