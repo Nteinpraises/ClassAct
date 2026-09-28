@@ -2,7 +2,7 @@
 
 # PulseBoard
 
-A personal productivity dashboard that brings together task management, focused work sessions, and habit tracking — all in one clean interface, with zero backend required.
+A personal productivity dashboard that brings together task management, focused work sessions, and habit tracking , all in one clean interface, with zero backend required.
 
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
@@ -11,7 +11,7 @@ A personal productivity dashboard that brings together task management, focused 
 
 ## Overview
 
-Most productivity apps split tasks, focus timers, and habits across three different tools. PulseBoard puts all three in one dashboard, so a day's work — what you did, how long you focused, and what habits you kept — lives in a single place.
+Most productivity apps split tasks, focus timers, and habits across three different tools. PulseBoard puts all three in one dashboard, so a day's work what you did, how long you focused, and what habits you kept lives in a single place.
 
 Everything is saved directly in the browser using `localStorage`, so there's no backend, no sign-up, and no database to manage. Open the page and your data is there next time you come back.
 
